@@ -19,12 +19,14 @@ Run the script as your normal Mac user. Do not run the entire script with `sudo`
 
 macOS may ask for your administrator password during installations that require elevated permissions.
 
-A GitHub account and Git are not required. The script is downloaded directly from the public repository using `curl`, which is included with macOS.
+A GitHub account and Git are not required beforehand. The script is downloaded directly from the public repository using `curl`, which is included with macOS. Git is installed by the setup script.
 
-## Installed applications
+## Installed applications and tools
 
 The script currently installs:
 
+* Homebrew
+* Git
 * Google Chrome
 * Tailscale desktop and CLI
 * NoMachine
@@ -35,9 +37,9 @@ The script currently installs:
 
 ## Login and configuration
 
-The script only installs the applications. Logins and account configuration can be completed afterward.
+The script installs the applications and tools, but does not sign in to any accounts.
 
-Examples:
+Logins and configuration can be completed afterward.
 
 ```bash
 tailscale login
@@ -49,9 +51,17 @@ For 1Password CLI integration, sign in to the 1Password desktop app and enable C
 
 Some desktop applications may need to be opened manually the first time so macOS can approve system permissions or extensions.
 
+## Verify Git
+
+After installation, you can confirm that Git is installed by running:
+
+```bash
+git --version
+```
+
 ## Run the script again
 
-The script can be run again later when new applications are added:
+The script can be run again later when new applications or tools are added:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hverdagsai/MMOSU/main/install-mac.sh \
