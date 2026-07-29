@@ -1,45 +1,62 @@
 # Mac Mini One-Shot Setup Utility.
 
-This repository contains a setup script that installs the required CLI tools and desktop applications on a new Mac.
+This repository contains a setup script for installing the applications and command-line tools used on a new Mac mini.
 
-## Run on another Mac
+## Run it on another Mac
 
-Open Terminal and run:
+Open **Terminal** and run:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hverdagsai/MMOSU/main/install-mac.sh \
   -o /tmp/install-mac.sh
 
 chmod +x /tmp/install-mac.sh
-
 /tmp/install-mac.sh
 ```
 
-Run the script as your normal Mac user. Do not run the entire script with `sudo`.
+Run the script as your normal macOS user. Do not run the entire script with `sudo`. It will ask for the administrator password when required.
 
-macOS may ask for your administrator password during installations that require elevated permissions.
+The Mac does not need Git installed beforehand, and no GitHub account is required. The public script is downloaded directly with `curl`, which is included with macOS. Git is then installed by the setup script.
 
-A GitHub account and Git are not required beforehand. The script is downloaded directly from the public repository using `curl`, which is included with macOS. Git is installed by the setup script.
+## Reload the Terminal environment
 
-## Installed applications and tools
+A script cannot change the environment of the Terminal process that launched it. After installation, either close and reopen Terminal or run:
 
-The script currently installs:
+```bash
+exec zsh -l
+```
+
+This reloads the shell and makes the newly installed CLI commands available.
+
+The installer adds the required paths to both `~/.zprofile` and `~/.zshrc`, including:
+
+* Homebrew
+* `~/.openclaw/bin`
+* `~/.local/bin`
+* `/usr/local/bin`
+
+## What it installs
+
+### Desktop applications
+
+* Google Chrome
+* Tailscale
+* NoMachine
+* ChatGPT desktop, including Codex
+* 1Password
+
+### Command-line tools
 
 * Homebrew
 * Git
-* Google Chrome
-* Tailscale desktop and CLI
-* NoMachine
+* Tailscale CLI
 * OpenClaw CLI
-* ChatGPT desktop
 * Codex CLI
-* 1Password desktop and CLI
+* 1Password CLI
 
-## Login and configuration
+## After installation
 
-The script installs the applications and tools, but does not sign in to any accounts.
-
-Logins and configuration can be completed afterward.
+Logins and account setup are intentionally skipped. Complete them afterward with:
 
 ```bash
 tailscale login
@@ -47,27 +64,32 @@ openclaw onboard --install-daemon
 codex
 ```
 
-For 1Password CLI integration, sign in to the 1Password desktop app and enable CLI integration in the app settings.
+For 1Password, open the desktop app, sign in, and enable CLI integration in its developer settings.
 
-Some desktop applications may need to be opened manually the first time so macOS can approve system permissions or extensions.
+Tailscale may need to be opened once so macOS can approve its VPN configuration and system extension.
 
-## Verify Git
+## Verify the CLI commands
 
-After installation, you can confirm that Git is installed by running:
+After reloading Terminal, run:
 
 ```bash
+brew --version
 git --version
+tailscale version
+openclaw --version
+codex --version
+op --version
 ```
 
-## Run the script again
+## Run the latest version again
 
-The script can be run again later when new applications or tools are added:
+The script is safe to run again. To download and run the newest version:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hverdagsai/MMOSU/main/install-mac.sh \
   -o /tmp/install-mac.sh
 
 chmod +x /tmp/install-mac.sh
-
 /tmp/install-mac.sh
+exec zsh -l
 ```
